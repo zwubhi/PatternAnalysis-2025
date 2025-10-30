@@ -1,4 +1,3 @@
-# train.py
 import os
 import argparse
 import numpy as np
@@ -11,8 +10,8 @@ import matplotlib.pyplot as plt
 from dataset import get_datasets, get_loaders
 from modules import build_model, LabelSmoothingLoss
 
-# ---------------- CLI ----------------
 def get_args():
+    """Parse command-line arguments for data location, hyperparameters and output."""
     p = argparse.ArgumentParser()
     p.add_argument("--data_dir", type=str, required=True,
                    help="Folder with 'train' and 'test' subfolders")
@@ -25,8 +24,11 @@ def get_args():
     p.add_argument("--out_dir", type=str, default="./outputs")
     return p.parse_args()
 
-# -------------- CutMix utils --------------
 def rand_bbox(size, lam):
+    """
+    Compute box coordinates for CutMix augmentation, based on lambda.
+    Returns: (bbx1, bby1, bbx2, bby2) for cropping/mixing patches.
+    """
     W, H = size[2], size[3]
     cut_rat = np.sqrt(1. - lam)
     cut_w, cut_h = int(W * cut_rat), int(H * cut_rat)
@@ -36,6 +38,10 @@ def rand_bbox(size, lam):
     return bbx1, bby1, bbx2, bby2
 
 def cutmix_data(x, y, alpha=1.0):
+    """
+    Apply CutMix augmentation to a batch: replace a patch of each image with another image in the batch.
+    Returns new images, mixed targets, and lambda weight.
+    """
     if alpha <= 0:
         return x, y
     lam = np.random.beta(alpha, alpha)
@@ -47,10 +53,10 @@ def cutmix_data(x, y, alpha=1.0):
     lam = 1 - ((bbx2 - bbx1) * (bby2 - bby1) / (x.size(-1) * x.size(-2)))
     return x, y_a, y_b, lam
 
-# -------------- Training --------------
+# Training Loop
 def main():
     args = get_args()
-    os.makedirs(args.out_dir, exist_ok=True)
+    os.makedirs(args.out_dir, exist_ok=True)  
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     torch.manual_seed(args.seed)
@@ -58,34 +64,32 @@ def main():
 
     train_root = os.path.join(args.data_dir, "train")
     test_root  = os.path.join(args.data_dir, "test")
-
     train_set, val_set, test_set, classes = get_datasets(train_root, test_root, args.img_size, args.seed)
     train_loader, val_loader, test_loader = get_loaders(train_set, val_set, test_set, args.batch_size)
-
-    # persist classes for predict/performance scripts
     with open(os.path.join(args.out_dir, "classes.txt"), "w") as f:
         for c in classes:
             f.write(c + "\n")
 
+    # Build model, criterion, optimizer, scaler for AMP, and learning rate scheduler
     model = build_model(num_classes=len(classes)).to(device)
     criterion = LabelSmoothingLoss(classes=len(classes), smoothing=0.1)
     optimizer = AdamW(model.parameters(), lr=args.lr)
     scaler = torch.amp.GradScaler(enabled=args.amp)
     scheduler = CosineAnnealingLR(optimizer, T_max=args.epochs)
 
+    # Early stopping/patience setup
     patience, no_improve, best_val_acc = 5, 0, 0.0
     train_loss_list, val_loss_list = [], []
     train_acc_list,  val_acc_list  = [], []
 
+    # Epoch loop 
     for epoch in range(1, args.epochs + 1):
         print(f"\nEpoch {epoch}/{args.epochs}")
-        # ---- train ----
         model.train()
         total_loss, correct, total = 0.0, 0, 0
         for imgs, labels in tqdm(train_loader, desc=f"Train Epoch {epoch}"):
             imgs, labels = imgs.to(device), labels.to(device)
             optimizer.zero_grad()
-
             if np.random.rand() < 0.5:
                 imgs, targets_a, targets_b, lam = cutmix_data(imgs, labels)
                 with torch.amp.autocast(device_type=device.type, enabled=args.amp):
@@ -112,7 +116,7 @@ def main():
         train_acc_list.append(train_acc)
         print(f"Train Loss: {train_loss:.4f}, Train Accuracy: {train_acc:.4f}")
 
-        # ---- validate ----
+        # Validation
         model.eval()
         v_loss, v_correct, v_total = 0.0, 0, 0
         with torch.no_grad(), torch.amp.autocast(device_type=device.type, enabled=args.amp):
@@ -130,23 +134,22 @@ def main():
         val_acc_list.append(val_acc)
         print(f"Validation Loss: {val_loss:.4f}, Validation Accuracy: {val_acc:.4f}")
 
-        # ---- early stopping + checkpoint ----
+        # Early stopping & checkpointing
         if val_acc > best_val_acc:
             best_val_acc = val_acc
             no_improve = 0
-            torch.save(model.state_dict(), os.path.join(args.out_dir, "best_model.pth"))
+            torch.save(model.state_dict(), os.path.join(args.out_dir, "ConvNeXt.pth"))
         else:
             no_improve += 1
             if no_improve >= patience:
                 print(f"Early stopping at epoch {epoch}")
                 break
 
-    # Save history for later plots
     np.savez(os.path.join(args.out_dir, "history.npz"),
              train_loss=train_loss_list, val_loss=val_loss_list,
              train_acc=train_acc_list,   val_acc=val_acc_list)
 
-    # quick loss plot
+    # Loss plot
     plt.figure(figsize=(8,5))
     xs = range(1, len(train_loss_list)+1)
     plt.plot(xs, train_loss_list, label="Training Loss")
@@ -157,8 +160,8 @@ def main():
     plt.savefig(os.path.join(args.out_dir, "loss_curve.png"))
     plt.close()
 
-    # test accuracy (final)
-    model.load_state_dict(torch.load(os.path.join(args.out_dir, "best_model.pth"), map_location=device))
+    # Test set evaluation with best checkpoint
+    model.load_state_dict(torch.load(os.path.join(args.out_dir, "ConvNeXt.pth"), map_location=device))
     model.eval()
     correct, total = 0, 0
     with torch.no_grad():
