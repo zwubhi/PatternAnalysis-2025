@@ -22,7 +22,7 @@ def main():
     #Argument Parsing
     ap = argparse.ArgumentParser()
     ap.add_argument("--data_dir", required=True, help="Folder with 'train' and 'test'")
-    ap.add_argument("--weights", required=True, help="Path to best_model.pth checkpoint")
+    ap.add_argument("--weights", required=True, help="Path to ConvNeXt.pth checkpoint")
     ap.add_argument("--classes", required=True, help="Path to classes.txt")
     ap.add_argument("--img_size", type=int, default=256)
     ap.add_argument("--batch_size", type=int, default=64)
