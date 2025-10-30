@@ -100,6 +100,17 @@ Metric                      | Value
 [[2790 1670]
 [ 476 4064]]
 
+---
+
+## Usage Summary
+
+| Script | Purpose | Main Inputs / Functions | Outputs / Description |
+|---------|----------|-------------------------|------------------------|
+| **dataset.py** | Handles data loading and preprocessing | `get_datasets()`, `get_loaders()`, `get_transforms()` | Loads MRI images, applies augmentations (flip, rotate, CutMix, etc.), splits into train/val/test sets, and returns PyTorch DataLoaders. |
+| **modules.py** | Defines the ConvNeXt model and loss functions | `ConvNeXt`, `ConvNeXtBlock`, `LayerNorm2d`, `LabelSmoothingLoss` | Builds ConvNeXt CNN architecture from scratch with modern design (depthwise conv, GELU, stochastic depth). |
+| **train.py** | Trains the ConvNeXt model | `--data_dir`, `--epochs`, `--batch_size`, `--out_dir` | Trains from scratch, applies CutMix + label smoothing, saves best weights as `ConvNeXt.pth`, and plots training curves. |
+| **performance.py** | Evaluates trained model performance | `--data_dir`, `--weights`, `--classes`, `--out_dir` | Computes accuracy, precision, recall, F1, ROC AUC, confusion matrix, and saves visualizations. |
+| **predict.py** | Predicts a single MRI image | `--weights`, `--classes`, `--img` | Displays input MRI image with predicted label (AD/NC) and confidence. |
 
 ---
 
