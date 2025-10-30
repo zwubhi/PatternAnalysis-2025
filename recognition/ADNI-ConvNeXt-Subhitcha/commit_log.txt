@@ -1,0 +1,32 @@
+b28f926 | 2025-10-31 | Subhitcha | updated images
+43ea415 | 2025-10-31 | Subhitcha | added figures
+b314ffe | 2025-10-31 | Subhitcha | modified README file
+0fad71f | 2025-10-31 | Subhitcha | modified README file
+0ba5e61 | 2025-10-31 | Subhitcha | Removed duplicate readme file
+5402df7 | 2025-10-31 | Subhitcha | added evaluation metrics
+5e8e65b | 2025-10-31 | Subhitcha | added sample prediction 2
+f4bac97 | 2025-10-31 | Subhitcha | added sample prediction 1
+fc7d175 | 2025-10-31 | Subhitcha | added roc curve
+6c75418 | 2025-10-31 | Subhitcha | output image
+bceddfb | 2025-10-31 | Subhitcha | Added loss vs epoch
+445fd32 | 2025-10-31 | Subhitcha | Added confusion matrix
+8ddc842 | 2025-10-31 | Subhitcha | Added Accuracy vs Epoch plot
+dc94ff3 | 2025-10-31 | Subhitcha | predict file with added comments
+4263a23 | 2025-10-31 | Subhitcha | train file with added comments
+9687a02 | 2025-10-31 | Subhitcha | minor path change
+9461fae | 2025-10-31 | Subhitcha | performance file with added comments
+2fff47e | 2025-10-31 | Subhitcha | modules file with added comments
+29a37f1 | 2025-10-31 | Subhitcha | dataset file with added comments
+1c7c1de | 2025-10-31 | Subhitcha | Updated code algorithm
+cc69a17 | 2025-10-31 | Subhitcha | Updated README file with inputs, outputs and performance scores
+402caac | 2025-10-31 | Subhitcha | Added accuracy vs epoch
+bc76939 | 2025-10-31 | Subhitcha | Added confusion matrix and roc curve
+ebb2aff | 2025-10-31 | Subhitcha | Uploaded empty performance.py file
+a1974e0 | 2025-10-31 | Subhitcha | Updated train.py code
+7774881 | 2025-10-31 | Subhitcha | Updated predict.py code
+0d8a49e | 2025-10-31 | Subhitcha | Updated dataset.py code
+a0d7953 | 2025-10-31 | Subhitcha | Updated modules.py code
+0f0caad | 2025-10-30 | Subhitcha | Committed ConvNeXt ADNI classifier python files
+fe94a07 | 2025-09-22 | Shekhar S. Chandra | Added recognition branch for tasks
+e5f50ae | 2025-09-22 | Shekhar S. Chandra | Updated text in README
+798954e | 2025-09-21 | Shakes | Initial commit
