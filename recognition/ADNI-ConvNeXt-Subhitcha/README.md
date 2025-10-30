@@ -133,20 +133,20 @@ NC Image    | NC        | **90.82%**
 ### Model Output
 ![Model Output](https://raw.githubusercontent.com/zwubhi/PatternAnalysis-2025/topic-recognition/recognition/ADNI-ConvNeXt-Subhitcha/figures/Output.png)
 
-### Accuracy vs Epoch
-![Accuracy vs Epoch](https://raw.githubusercontent.com/zwubhi/PatternAnalysis-2025/topic-recognition/recognition/ADNI-ConvNeXt-Subhitcha/figures/Accuracy%20VS%20Epoch.png)
-
-### Loss vs Epoch
-![Loss vs Epoch](https://raw.githubusercontent.com/zwubhi/PatternAnalysis-2025/topic-recognition/recognition/ADNI-ConvNeXt-Subhitcha/figures/Loss%20VS%20Epoch.png)
-
-### ROC Curve
-![ROC Curve](https://raw.githubusercontent.com/zwubhi/PatternAnalysis-2025/topic-recognition/recognition/ADNI-ConvNeXt-Subhitcha/figures/ROC_Curve.png)
+### Evaluation Metrics
+![Evaluation Metrics](https://raw.githubusercontent.com/zwubhi/PatternAnalysis-2025/topic-recognition/recognition/ADNI-ConvNeXt-Subhitcha/figures/Evaluation_Metrics.png)
 
 ### Confusion Matrix
 ![Confusion Matrix](https://raw.githubusercontent.com/zwubhi/PatternAnalysis-2025/topic-recognition/recognition/ADNI-ConvNeXt-Subhitcha/figures/Confusion_Matrix.png)
 
-### Evaluation Metrics
-![Evaluation Metrics](https://raw.githubusercontent.com/zwubhi/PatternAnalysis-2025/topic-recognition/recognition/ADNI-ConvNeXt-Subhitcha/figures/Evaluation_Metrics.png)
+### ROC Curve
+![ROC Curve](https://raw.githubusercontent.com/zwubhi/PatternAnalysis-2025/topic-recognition/recognition/ADNI-ConvNeXt-Subhitcha/figures/ROC_Curve.png)
+
+### Loss vs Epoch
+![Loss vs Epoch](https://raw.githubusercontent.com/zwubhi/PatternAnalysis-2025/topic-recognition/recognition/ADNI-ConvNeXt-Subhitcha/figures/Loss%20VS%20Epoch.png)
+
+### Accuracy vs Epoch
+![Accuracy vs Epoch](https://raw.githubusercontent.com/zwubhi/PatternAnalysis-2025/topic-recognition/recognition/ADNI-ConvNeXt-Subhitcha/figures/Accuracy%20VS%20Epoch.png)
 
 ### Sample output 1
 ![Sample output 1](https://raw.githubusercontent.com/zwubhi/PatternAnalysis-2025/topic-recognition/recognition/ADNI-ConvNeXt-Subhitcha/figures/Prediction_AD.png)
