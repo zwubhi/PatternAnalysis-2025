@@ -74,7 +74,8 @@ Confidence: 89.95%
 Confidence: 90.82%
 
 ## PLOTS:
-https://raw.githubusercontent.com/zwubhi/PatternAnalysis-2025/main/recognition/ADNI-ConvNeXt-Subhitcha/figures/Output.png
+https://raw.githubusercontent.com/zwubhi/PatternAnalysis-2025/topic-recognition/recognition/ADNI-ConvNeXt-Subhitcha/figures/Output.png
+
 
 ## NOTE:
 Achieved accuracy of 87.28% with pretrained on ImageNet. Preferred this instead with 76.16% accuracy, since it was built from scratch.
